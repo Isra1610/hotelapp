@@ -180,7 +180,7 @@ const Hoteles = () => {
 											onClick={() => deleteFav(favorite)}
 											sx={{ ml: 2 }}
 										>
-											Delete from favorites
+											Delete
 										</Button>
 									</Box>
 									<Typography
