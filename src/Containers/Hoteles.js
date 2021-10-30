@@ -69,7 +69,7 @@ const Hoteles = () => {
 	return (
 		<Container>
 			<div className="hotelFav__container">
-				<label htmlFor="">Hoteles Favoritos</label>
+				<label htmlFor="">Favorite Hotels</label>
 				<Switch
 					onChange={handleClick}
 					inputProps={{ "aria-label": "controlled" }}
