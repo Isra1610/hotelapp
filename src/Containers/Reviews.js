@@ -65,6 +65,7 @@ const Reviews = () => {
 								name="read-only"
 								value={hoteles[params.id - 1].rating}
 								readOnly
+								sx={{ ml: 2 }}
 							/>
 						</Box>
 						<Typography
@@ -101,7 +102,12 @@ const Reviews = () => {
 										{review.title}
 									</Typography>
 
-									<Rating name="read-only" value={review.rating} readOnly />
+									<Rating
+										name="read-only"
+										value={review.rating}
+										readOnly
+										sx={{ ml: 2 }}
+									/>
 								</Box>
 								<Typography
 									sx={{ pl: 2, pr: 2, pb: 2 }}

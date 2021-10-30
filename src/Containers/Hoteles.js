@@ -1,9 +1,7 @@
 import React, { useState, useReducer } from "react";
 import { Link } from "react-router-dom";
 import useHoteles from "../hooks/useHoteles";
-import heartRed from "../icons/heart.png";
 import { Container } from "@mui/material";
-import heartClear from "../icons/heart-clear.png";
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -13,6 +11,8 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const API =
 	"https://my-json-server.typicode.com/manuelmebm/testing-hotel-api/hotels";
@@ -53,10 +53,18 @@ const Hoteles = () => {
 	//---------useReducer---------
 
 	const addFav = (favorite) => {
-		dispatch({
-			type: "ADD_TO_FAVORITE",
-			payload: { ...favorite, fav: true },
-		});
+		console.log(favorite);
+		if (!favorites.favorites.find((fav) => fav.id === favorite.id)) {
+			dispatch({
+				type: "ADD_TO_FAVORITE",
+				payload: { ...favorite, fav: true },
+			});
+		} else {
+			dispatch({
+				type: "ADD_TO_FAVORITE",
+				payload: { ...favorite },
+			});
+		}
 	};
 
 	const deleteFav = (favorite) => {
@@ -72,6 +80,7 @@ const Hoteles = () => {
 		setFlag(!flag);
 	};
 
+	console.log(favorites);
 	return (
 		<Container>
 			<div className="hotelFav__container">
@@ -109,7 +118,12 @@ const Hoteles = () => {
 										</Typography>
 									</Link>
 
-									<Rating name="read-only" value={hotel.rating} readOnly />
+									<Rating
+										name="read-only"
+										value={hotel.rating}
+										readOnly
+										sx={{ ml: 2 }}
+									/>
 									<Checkbox
 										icon={<FavoriteBorder />}
 										checkedIcon={<Favorite />}
@@ -117,6 +131,7 @@ const Hoteles = () => {
 										alt="favorite"
 										className="heart"
 										onChange={() => addFav(hotel)}
+										sx={{ ml: 2 }}
 									/>
 								</Box>
 								<Typography
@@ -153,17 +168,20 @@ const Hoteles = () => {
 										<Typography component="div" variant="h5">
 											{favorite.title}
 										</Typography>
-										<Rating name="read-only" value={favorite.rating} readOnly />
-										<Checkbox
-											icon={<FavoriteBorder />}
-											checkedIcon={<Favorite />}
-											type="checkbox"
-											src={heartClear}
-											checked={favorite.fav}
-											alt="favorite"
-											className="heart"
-											onChange={() => deleteFav(favorite)}
+										<Rating
+											name="read-only"
+											value={favorite.rating}
+											readOnly
+											sx={{ ml: 2 }}
 										/>
+										<Button
+											variant="outlined"
+											startIcon={<DeleteIcon />}
+											onClick={() => deleteFav(favorite)}
+											sx={{ ml: 2 }}
+										>
+											Delete from favorites
+										</Button>
 									</Box>
 									<Typography
 										sx={{ pl: 2, pr: 2 }}

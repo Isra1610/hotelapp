@@ -38,6 +38,7 @@ const InputReview = ({ addReview }) => {
 				onChange={(event, newValue) => {
 					setCurrentValue(newValue);
 				}}
+				sx={{ mb: 2 }}
 			/>
 			<TextField
 				placeholder="Add review title"
