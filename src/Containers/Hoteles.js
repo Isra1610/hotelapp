@@ -29,6 +29,12 @@ const favoriteReducer = (state, action) => {
 			return {
 				favorites: [...state.favorites, action.payload],
 			};
+		case "REMOVE_FROM_FAVORITE":
+			return {
+				favorites: state.favorites.filter(
+					(favorite) => favorite.id !== action.payload
+				),
+			};
 		default:
 			return state;
 	}
@@ -47,17 +53,17 @@ const Hoteles = () => {
 	//---------useReducer---------
 
 	const addFav = (favorite) => {
-		if (favorite.id !== favorites.id) {
-			dispatch({
-				type: "ADD_TO_FAVORITE",
-				payload: { ...favorite, fav: true },
-			});
-		} else {
-			dispatch({
-				type: "ADD_TO_FAVORITE",
-				payload: { ...favorite, fav: false },
-			});
-		}
+		dispatch({
+			type: "ADD_TO_FAVORITE",
+			payload: { ...favorite, fav: true },
+		});
+	};
+
+	const deleteFav = (favorite) => {
+		dispatch({
+			type: "REMOVE_FROM_FAVORITE",
+			payload: favorite.id,
+		});
 	};
 
 	//---------FlagFunction for favorites---------
@@ -108,7 +114,6 @@ const Hoteles = () => {
 										icon={<FavoriteBorder />}
 										checkedIcon={<Favorite />}
 										type="checkbox"
-										src={heartClear}
 										alt="favorite"
 										className="heart"
 										onChange={() => addFav(hotel)}
@@ -149,7 +154,16 @@ const Hoteles = () => {
 											{favorite.title}
 										</Typography>
 										<Rating name="read-only" value={favorite.rating} readOnly />
-										<img src={heartRed} alt="favorite" className="heart" />
+										<Checkbox
+											icon={<FavoriteBorder />}
+											checkedIcon={<Favorite />}
+											type="checkbox"
+											src={heartClear}
+											checked={favorite.fav}
+											alt="favorite"
+											className="heart"
+											onChange={() => deleteFav(favorite)}
+										/>
 									</Box>
 									<Typography
 										sx={{ pl: 2, pr: 2 }}
